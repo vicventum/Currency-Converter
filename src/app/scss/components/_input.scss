@@ -1,0 +1,13 @@
+.input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    
+    font-size: $f-medium;
+    text-align: inherit;
+
+
+    transition: background-color .2s;
+
+    &--valid {background-color: $valid;}
+    &--invalid {background-color: $invalid;}
+}
