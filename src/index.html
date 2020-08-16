@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/Conversor Moneratio.css">
-    <title>Conversor Monetario</title>
+    <title>Currency converter</title>
 </head>
-<body>
-    <main class="main">
-        <div class="conversor">
-            <div class="screen" id="screen">0</div>
-            
-            <form action="" class="fields">
-                <input id="input" type="number" class="fields__input" placeholder="0" >
-                <div class="fields__container-currency">
-                    <template id="options-template">
-                        <option value="dolares">Dolares</option>
-                        <option value="bolivares">Bolivares</option>
-                        <option value="pesos">Pesos (Colombianos)</option>
-                    </template>
-                    <select name="currency-in" id="currency-in" class="fields__currency-in"></select>
-    
-                    <button class="fields__change btn" id="change"><=></button>
-    
-                    <select name="currency-out" id="currency-out" class="fields__currency-out"></select>
 
-                </div>
+<body class="main">
+    <div class="converter">
+        <div class="screen" id="screen">0</div>
 
-                <input id="submit" type="submit" value="Convertir" class="fields__submit btn">
-                <button id="update" class="btn fields__update">Actualizar</button>
-            </form>
+        <form class="fields" >
+            <input id="input" type="number" class="fields__input" placeholder="0">
 
-        </div>
-    </main>
+            <div class="currency">
 
-    <script src="Conversor Moneratio.js"></script>
+                <select name="currency-in" id="currency-in" class="fields__currency-in"></select>
+
+                <button class="fields__change btn" id="change">
+                    <=>
+                </button>
+
+                <select name="currency-out" id="currency-out" class="fields__currency-out"></select>
+
+            </div>
+
+            <div class="suggestions">
+                <button class="btn btn--suggestion"></button>
+                <button class="btn btn--suggestion"></button>
+                <button class="btn btn--suggestion"></button>
+                <button class="btn btn--suggestion"></button>
+
+                <button class="btn btn--reset"></button>
+            </div>
+
+            <input class="fields__submit btn" id="submit" type="submit" value="Convertir" >
+        </form> 
+    </div>
+
+    <script src="index.js"></script>
 </body>
+
 </html>
