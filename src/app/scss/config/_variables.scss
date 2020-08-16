@@ -1,4 +1,5 @@
 :root {
+  // Colors
   --primary: #c73434;
   --secondary: #df366e;
   --secondary-dark: #57001d;
@@ -7,11 +8,16 @@
   --invalid: rgb(255, 189, 177);
 
   --light: #ffffff;
+  --light-transparent: rgba(255, 255, 255, 0.5);
   --dark: #0a0a0a;
 
+  // Fonts
   --f-big: 7rem;
   --f-medium: 5rem;
   --f-small: 3rem;
+
+  // Sizes
+  --border: 2.5rem
 }
 
 $primary: var(--primary);
@@ -20,11 +26,14 @@ $secondary-dark: var(--secondary-dark);
 $valid: var(--valid);
 $invalid: var(--invalid);
 $light: var(--light);
+$light-transparent: var(--light-transparent);
 $dark: var(--dark);
 
 $f-big: var(--f-big);
 $f-medium: var(--f-medium);
 $f-small: var(--f-small);
+
+$border: var(--border);
 
 // Breakpoints
 $breakpoints: (
