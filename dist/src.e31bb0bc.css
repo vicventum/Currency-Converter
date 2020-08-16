@@ -39,6 +39,9 @@ body {
 input,
 select {
   color: var(--light);
+  background-color: transparent;
+  border: none;
+  text-align: center;
 }
 
 .main {
@@ -88,13 +91,20 @@ select {
 }
 
 .btn {
-  border: none;
-  background-color: var(--secondary);
-  border-radius: 10px;
   cursor: pointer;
-  color: var(--primary);
+  border: none;
 }
-.btn:hover {
+.btn--change {
+  background-color: transparent;
+  border-left: 1px solid var(--secondary);
+  border-right: 1px solid var(--secondary);
+  color: var(--secondary);
+  font-size: 3.5rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  -o-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+}
+.btn--change:hover {
   background-color: var(--secondary-dark);
 }
 
@@ -152,6 +162,31 @@ select {
 }
 .input--invalid {
   background-color: var(--invalid);
+}
+
+.currency {
+  --gap: 2rem;
+  display: grid;
+  grid-template-columns: calc(40% - var(--gap)) 20% calc(40% - var(--gap));
+  gap: var(--gap);
+  font-size: var(--f-medium);
+}
+.currency__item:not(.currency__item--change) {
+  font-size: var(--f-small);
+}
+
+.suggestions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.suggestions > button {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.suggestions > button:not(:last-child) {
+  margin-right: 1rem;
 }
 
 /*# sourceMappingURL=/src.e31bb0bc.css.map */
