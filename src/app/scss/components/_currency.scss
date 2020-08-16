@@ -1,0 +1,13 @@
+.currency {
+    --gap: 2rem;
+    
+    display: grid;
+    grid-template-columns: calc(40% - var(--gap)) 20% calc(40% - var(--gap));
+    gap: var(--gap);
+
+    font-size: $f-medium;
+
+    &__item:not(.currency__item--change) {
+        font-size: $f-small;
+    }
+}

@@ -22,6 +22,9 @@ body {
 input,
 select {
     color: $light;
+    background-color: transparent;
+    border: none;
+    text-align: center;
 }
 
 .main{

@@ -1,11 +1,21 @@
 .btn {
-    border: none;
-    background-color: $secondary;
-    border-radius: 10px;
     cursor: pointer;
-    color: $primary;
-    
-    &:hover {
-        background-color: $secondary-dark;
+    border: none;
+
+    &--change {
+        background-color: transparent;
+        border-left: 1px solid $secondary;
+        border-right: 1px solid $secondary;
+        color: $secondary;
+
+        font-size: 3.5rem;
+
+
+        transition: background-color .2s ease-in-out;
+
+        &:hover {
+            background-color: $secondary-dark;
+        }
     }
+    
 }

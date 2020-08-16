@@ -1,0 +1,9 @@
+.suggestions {
+    display: flex;
+    
+    & > button {
+        flex: 1;
+        
+        &:not(:last-child) { margin-right: 1rem; }
+    }
+}
