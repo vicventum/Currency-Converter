@@ -1,9 +1,6 @@
 .converter {
-    position: relative;
-
     width: 100vw;
     height: 100vh;
-
     max-width: 40rem;
     max-height: 73rem;
 
@@ -14,4 +11,9 @@
     border-radius: $border;
     
     text-align: center;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 30% 1fr;
+    gap: 5%;
 }
