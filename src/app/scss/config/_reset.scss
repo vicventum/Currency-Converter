@@ -20,7 +20,7 @@ body {
 }
 input,
 select {
-    color: $primary;
+    color: $light;
 }
 
 .main{
@@ -30,8 +30,8 @@ select {
     width: 100vw;
     height: 100vh;
     background:linear-gradient(
-        to bottom right,
-        lightblue 0%,
-        darkslateblue 100%
+        to bottom,
+        $secondary-dark 0%,
+        $dark 100%
     );
 }

@@ -23,8 +23,7 @@
           "Firefox ESR",
           "ie > 9"
         ]
-      },
-      "rfs": {}
+      }
     }
   },
   "author": "Victor Alvarez <vicventum.dev@gmail.com>",
