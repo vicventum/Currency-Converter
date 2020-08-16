@@ -1,0 +1,17 @@
+.converter {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    max-width: 40rem;
+    max-height: 73rem;
+
+    padding: 20px;
+    border: 1px solid $secondary;
+
+    background-color: transparent;
+    border-radius: 25px;
+    
+    text-align: center;
+}

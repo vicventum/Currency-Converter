@@ -14,8 +14,9 @@ html {
 }
 
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    box-sizing: border-box;
+    font-family: monospace;
+    color: $light;
+    font-size: $f-medium;
     margin: 0;
 }
 input,
