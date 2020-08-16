@@ -1,12 +1,17 @@
+// vendor
+@import "../../../node_modules/include-media/dist/include-media";
+
 // config
 @import "config/variables";
-@import "config/base"; 
+@import "config/reset"; 
 
 
 // helpers
 @import "helpers/utilities"; 
-@import "helpers/mixins"; 
-@import "helpers/animations"; 
 
 // components
-@import "components/buttons"; 
+@import "components/buttons";
+@import "components/converter";
+@import "components/screen";
+@import "components/fields";
+@import "components/suggestions";

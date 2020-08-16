@@ -1,0 +1,11 @@
+.btn {
+    border: none;
+    background-color: $secondary;
+    border-radius: 10px;
+    cursor: pointer;
+    color: $primary;
+    
+    &:hover {
+        background-color: $secondary-dark;
+    }
+}

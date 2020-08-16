@@ -1,53 +1,7 @@
-:root {
-    --light: #ffffff;
-    --primary: darkslateblue;
-    --secondary: rgb(176, 194, 238);
-    --secondary-dark: rgb(176, 180, 238);
-    --valid: rgb(179, 255, 179);
-    --invalid: rgb(255, 189, 177);
-}
 
-$light: var(--light);
-$primary: var(--primary);
-$secondary: var(--secondary);
-$secondary-dark: var(--secondary-dark);
-$valid: var(--valid);
-$invalid: var(--invalid);
 
-body{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    box-sizing: border-box;
-    margin: 0;
-}
-input,
-select {
-    color: $primary;
-}
 
-.btn {
-    border: none;
-    background-color: $secondary;
-    border-radius: 10px;
-    cursor: pointer;
-    color: $primary;
-    
-    &:hover {
-        background-color: $secondary-dark;
-    }
-}
 
-.main{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    background:linear-gradient(
-        to bottom right,
-        lightblue 0%,
-        darkslateblue 100%
-    );
-}
 
 .conversor{
     width: 450px;
