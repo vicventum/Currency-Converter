@@ -1,9 +1,14 @@
 .btn {
     cursor: pointer;
     border: none;
+    background-color: transparent;
+    color: $light;
+    
+    transition: background-color .25s ease-in-out;
 
+    &:hover { background-color: $secondary-dark; }
+    
     &--change {
-        background-color: transparent;
         border-left: 1px solid $secondary;
         border-right: 1px solid $secondary;
         color: $secondary;
@@ -11,11 +16,15 @@
         font-size: 3.5rem;
 
 
-        transition: background-color .2s ease-in-out;
 
-        &:hover {
-            background-color: $secondary-dark;
-        }
+    }
+
+    &--suggestion {
+        border: 1px solid $secondary;
+    }
+
+    &--reset {
+        border: 1px solid $terceary;
     }
     
 }
