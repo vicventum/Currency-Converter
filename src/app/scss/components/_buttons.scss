@@ -27,4 +27,22 @@
         border: 1px solid $terceary;
     }
     
+    &--submit {
+        border-bottom: 1px solid $secondary;
+        border-left: 1px solid $secondary;
+        border-right: 1px solid $secondary;
+
+        border-bottom-right-radius: $border;
+        border-bottom-left-radius: $border;
+
+        font-size: $f-medium;
+        color: $secondary;
+        letter-spacing: 3px;
+
+        transition: color .25s ease-in-out;
+
+        &:hover {
+            color: $light;
+        }
+    }
 }
