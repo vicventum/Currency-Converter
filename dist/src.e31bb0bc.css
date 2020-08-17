@@ -2,6 +2,7 @@
   --primary: #c73434;
   --secondary: #df366e;
   --secondary-dark: #57001d;
+  --terceary: #ab38c3;
   --valid: rgb(179, 255, 179);
   --invalid: rgb(255, 189, 177);
   --light: #ffffff;
@@ -93,19 +94,26 @@ select {
 .btn {
   cursor: pointer;
   border: none;
+  background-color: transparent;
+  color: var(--light);
+  -webkit-transition: background-color 0.25s ease-in-out;
+  -o-transition: background-color 0.25s ease-in-out;
+  transition: background-color 0.25s ease-in-out;
+}
+.btn:hover {
+  background-color: var(--secondary-dark);
 }
 .btn--change {
-  background-color: transparent;
   border-left: 1px solid var(--secondary);
   border-right: 1px solid var(--secondary);
   color: var(--secondary);
   font-size: 3.5rem;
-  -webkit-transition: background-color 0.2s ease-in-out;
-  -o-transition: background-color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out;
 }
-.btn--change:hover {
-  background-color: var(--secondary-dark);
+.btn--suggestion {
+  border: 1px solid var(--secondary);
+}
+.btn--reset {
+  border: 1px solid var(--terceary);
 }
 
 .converter {
@@ -151,11 +159,16 @@ select {
 .input {
   background-color: rgba(255, 255, 255, 0.1);
   border: none;
-  font-size: var(--f-medium);
+  font-size: 2.5rem;
   text-align: inherit;
   -webkit-transition: background-color 0.2s;
   -o-transition: background-color 0.2s;
   transition: background-color 0.2s;
+}
+@media (min-width: 360px) {
+  .input {
+    font-size: var(--f-medium);
+  }
 }
 .input--valid {
   background-color: var(--valid);
@@ -184,6 +197,7 @@ select {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+  font-size: var(--f-small);
 }
 .suggestions > button:not(:last-child) {
   margin-right: 1rem;

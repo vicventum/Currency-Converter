@@ -3,6 +3,7 @@
     
     & > button {
         flex: 1;
+        font-size: $f-small;
         
         &:not(:last-child) { margin-right: 1rem; }
     }
