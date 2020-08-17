@@ -192,8 +192,26 @@ module.hot.accept(reloadCSS);
 },{"_css_loader":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"app/js/app.js":[function(require,module,exports) {
 // imports
 // Variables
-// Listeners
-// Functions
+var screen = document.getElementById('screen'),
+    input = document.getElementById('input'),
+    currencyIn = document.getElementById('currency-in'),
+    currencyOut = document.getElementById('currency-out'),
+    change = document.getElementById('change'),
+    reset = document.getElementById('reset'),
+    submit = document.getElementById('submit'); // Listeners ===========================================
+
+input.addEventListener('keyup', validate);
+input.addEventListener('blur', cleanInput); // Functions ===========================================
+
+function validate(e) {
+  var value = e.target.value;
+  value.match(/^[\d\.\s]+$/gi) ? input.classList.remove('input--invalid') : input.classList.add('input--invalid');
+}
+
+function cleanInput(e) {
+  var value = e.target.value;
+  if (value === '') input.classList.remove('input--invalid');
+}
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
