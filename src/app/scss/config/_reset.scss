@@ -26,6 +26,9 @@ select {
     border: none;
     text-align: center;
 }
+option {
+    background-color: $secondary-dark;
+}
 
 .main{
     display: flex;
