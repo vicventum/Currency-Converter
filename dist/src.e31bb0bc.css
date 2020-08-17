@@ -115,6 +115,22 @@ select {
 .btn--reset {
   border: 1px solid var(--terceary);
 }
+.btn--submit {
+  border-bottom: 1px solid var(--secondary);
+  border-left: 1px solid var(--secondary);
+  border-right: 1px solid var(--secondary);
+  border-bottom-right-radius: var(--border);
+  border-bottom-left-radius: var(--border);
+  font-size: var(--f-medium);
+  color: var(--secondary);
+  letter-spacing: 3px;
+  -webkit-transition: color 0.25s ease-in-out;
+  -o-transition: color 0.25s ease-in-out;
+  transition: color 0.25s ease-in-out;
+}
+.btn--submit:hover {
+  color: var(--light);
+}
 
 .converter {
   width: 100vw;
@@ -149,7 +165,7 @@ select {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: 1fr 20% 15% 1fr;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
