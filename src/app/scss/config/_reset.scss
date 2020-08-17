@@ -15,13 +15,13 @@ html {
 
 body {
     font-family: monospace;
-    color: $light;
+    color: $font-color;
     font-size: $f-medium;
     margin: 0;
 }
 input,
 select {
-    color: $light;
+    color: $font-color;
     background-color: transparent;
     border: none;
     text-align: center;

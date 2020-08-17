@@ -2,12 +2,13 @@
     background-color: rgba(255, 255, 255, 0.1);
     border: none;
     
-    font-size: 2.5rem;
+    font-size: $f-medium;
     text-align: inherit;
 
-    @include media('>=360px') {
-        font-size: $f-medium;
-    }
+    border-left: 1px solid $secondary;
+    border-right: 1px solid $secondary;
+
+
 
     transition: background-color .2s;
 

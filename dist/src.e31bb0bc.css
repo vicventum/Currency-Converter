@@ -3,17 +3,17 @@
   --secondary: #df366e;
   --secondary-dark: #57001d;
   --terceary: #ab38c3;
+  --font-color: #bffff6;
   --valid: rgb(179, 255, 179);
   --invalid: rgb(255, 189, 177);
   --light: #ffffff;
-  --light-transparent: rgba(255, 255, 255, 0.4);
+  --light-transparent: rgba(255, 255, 255, 0.35);
   --dark: #0a0a0a;
   --f-big: 7rem;
-  --f-medium: 3rem;
+  --f-medium: 2rem;
   --f-small: 2rem;
   --border: 2.5rem ;
 }
-
 html {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -32,14 +32,14 @@ html {
 
 body {
   font-family: monospace;
-  color: var(--light);
+  color: var(--font-color);
   font-size: var(--f-medium);
   margin: 0;
 }
 
 input,
 select {
-  color: var(--light);
+  color: var(--font-color);
   background-color: transparent;
   border: none;
   text-align: center;
@@ -95,7 +95,7 @@ select {
   cursor: pointer;
   border: none;
   background-color: transparent;
-  color: var(--light);
+  color: var(--font-color);
   -webkit-transition: background-color 0.25s ease-in-out;
   -o-transition: background-color 0.25s ease-in-out;
   transition: background-color 0.25s ease-in-out;
@@ -122,7 +122,6 @@ select {
   border-bottom-right-radius: var(--border);
   border-bottom-left-radius: var(--border);
   font-size: var(--f-medium);
-  color: var(--secondary);
   letter-spacing: 3px;
   -webkit-transition: color 0.25s ease-in-out;
   -o-transition: color 0.25s ease-in-out;
@@ -152,12 +151,11 @@ select {
   width: 100%;
   height: 100%;
   background-color: var(--light-transparent);
-  opacity: 0.9;
   border-top-left-radius: var(--border);
   border-top-right-radius: var(--border);
-  -webkit-box-shadow: 0rem 1rem 1rem 0rem var(--secondary);
-          box-shadow: 0rem 1rem 1rem 0rem var(--secondary);
+  border-bottom: 1px solid var(--secondary);
   font-size: var(--f-big);
+  color: var(--light);
   text-align: center;
 }
 
@@ -175,16 +173,13 @@ select {
 .input {
   background-color: rgba(255, 255, 255, 0.1);
   border: none;
-  font-size: 2.5rem;
+  font-size: var(--f-medium);
   text-align: inherit;
+  border-left: 1px solid var(--secondary);
+  border-right: 1px solid var(--secondary);
   -webkit-transition: background-color 0.2s;
   -o-transition: background-color 0.2s;
   transition: background-color 0.2s;
-}
-@media (min-width: 360px) {
-  .input {
-    font-size: var(--f-medium);
-  }
 }
 .input--valid {
   background-color: var(--valid);
