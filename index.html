@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Currency converter</title>
+</head>
+
+<body class="main">
+    <div class="converter">
+        <div class="screen" id="screen">0</div>
+
+        <form class="fields">
+            <!-- Input -->
+            <input id="input" type="number" class="input" placeholder="0">
+
+            <!-- Currency fields -->
+            <div class="currency">
+
+                <select name="currency-in" id="currency-in" class="currency__item currency__item--in">
+                    <option value="Dollar">Dollar</option>
+                </select>
+                <button class="currency__item currency__item--change btn btn--change" id="change">⇌</button>
+
+                <!-- <button class="currency__item currency__item--change btn btn--change" id="change">◁▷</button> -->
+
+
+
+                <select name="currency-out" id="currency-out" class="currency__item currency__item--out">
+                    <option value="Veneco">Veneco</option>
+                    <option value="Veneco">Pesos</option>
+                </select>
+
+            </div>
+
+            <!-- Suggestion section -->
+            <div class="suggestions">
+                <button class="btn btn--suggestion">1</button>
+                <button class="btn btn--suggestion">5</button>
+                <button class="btn btn--suggestion">20</button>
+                <button class="btn btn--suggestion">50</button>
+
+                <button class="btn btn--reset">↺</button>
+            </div>
+
+            <input class="submit btn btn--submit" id="submit" type="submit" value="CONVERT">
+        </form>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
