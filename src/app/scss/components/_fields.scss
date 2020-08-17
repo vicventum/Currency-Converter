@@ -3,7 +3,7 @@
     
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows:  20fr 20% 15% 1fr;
+    grid-template-rows:  15% 20% 15% 1fr;
     justify-content: center;
-    gap: 1rem;
+    gap: $gutter / 2;
 }

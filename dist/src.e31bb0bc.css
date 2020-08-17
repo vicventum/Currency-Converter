@@ -10,9 +10,14 @@
   --light-transparent: rgba(255, 255, 255, 0.35);
   --dark: #0a0a0a;
   --f-big: 7rem;
-  --f-medium: 2rem;
+  --f-medium: 1.5rem;
   --f-small: 2rem;
   --border: 2.5rem ;
+}
+@media (min-width: 335px) {
+  :root {
+    --f-medium: 2rem;
+  }
 }
 html {
   -webkit-box-sizing: border-box;
@@ -135,8 +140,8 @@ select {
   width: 100vw;
   height: 100vh;
   max-width: 40rem;
-  max-height: 73rem;
-  padding: 20px;
+  max-height: 80rem;
+  padding: 1rem;
   border: 1px solid var(--secondary);
   background-color: transparent;
   border-radius: var(--border);
@@ -144,7 +149,12 @@ select {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 30% 1fr;
-  gap: 5%;
+  gap: 2rem;
+}
+@media (min-width: 320px) {
+  .converter {
+    padding: 2rem;
+  }
 }
 
 .screen {
@@ -163,7 +173,7 @@ select {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 20% 15% 1fr;
+  grid-template-rows: 15% 20% 15% 1fr;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -189,11 +199,19 @@ select {
 }
 
 .currency {
-  --gap: 2rem;
+  --gap: 0rem;
   display: grid;
   grid-template-columns: calc(40% - var(--gap)) 20% calc(40% - var(--gap));
   gap: var(--gap);
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   font-size: var(--f-medium);
+}
+@media (min-width: 325px) {
+  .currency {
+    --gap: 1rem;
+  }
 }
 .currency__item:not(.currency__item--change) {
   font-size: var(--f-small);

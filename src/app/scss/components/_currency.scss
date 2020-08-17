@@ -1,11 +1,16 @@
 .currency {
-    --gap: 2rem;
+    --gap: 0rem;
     
     display: grid;
     grid-template-columns: calc(40% - var(--gap)) 20% calc(40% - var(--gap));
     gap: var(--gap);
+    justify-content: space-between;
 
     font-size: $f-medium;
+
+    @include media('>=325px') {
+        --gap: 1rem;
+    }
 
     &__item:not(.currency__item--change) {
         font-size: $f-small;

@@ -15,11 +15,14 @@
 
   // Fonts
   --f-big: 7rem;
-  --f-medium: 2rem;
+  --f-medium: 1.5rem;
   --f-small: 2rem;
 
+  @include media('>=335px') {
+    --f-medium: 2rem;
+  } 
   @include media('>=360px') {
-    $f-medium: 3rem;
+    // $f-medium: 3rem;
   } 
   // Sizes
   --border: 2.5rem
@@ -41,6 +44,8 @@ $f-medium: var(--f-medium);
 $f-small: var(--f-small);
 
 $border: var(--border);
+
+$gutter: 2rem;
 
 // Breakpoints
 $breakpoints: (
