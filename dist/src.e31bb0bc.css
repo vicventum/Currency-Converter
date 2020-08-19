@@ -176,6 +176,7 @@ option {
 
 .fields {
   width: 100%;
+  min-width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 15% 20% 15% 1fr;

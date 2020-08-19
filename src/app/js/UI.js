@@ -24,20 +24,27 @@ export class UI {
 
     async fillList(currencyList) {
     
-        const fragment = document.createDocumentFragment()
+        const fragmentIn = document.createDocumentFragment()
+        const fragmentOut = document.createDocumentFragment()
+        let countId = 0
     
         for (const code in currencyList) {
             const option = document.createElement('option')
             const name = currencyList[code].name
-                // Insert de code of de currency: option.textContent = code
+            // Insert de code of de currency: option.textContent = code
             // Insert the name of de currency
             option.textContent = name
-            fragment.appendChild(option) 
-            
+
+            option.id = countId
+            fragmentIn.appendChild(option.cloneNode(true))
+            fragmentOut.appendChild(option.cloneNode(true))
+            countId++
         }
+        console.log(fragmentIn);
+        console.log(fragmentOut);
     
-        this.currencyIn.appendChild(fragment.cloneNode(true))
-        this.currencyOut.appendChild(fragment.cloneNode(true))
+        this.currencyIn.appendChild(fragmentIn.cloneNode(true))
+        this.currencyOut.appendChild(fragmentOut.cloneNode(true))
         
         // Marked US Dollar and Venezuelan Bolivar
         this.currencyIn.options[this.currencyIn.selectedIndex].setAttribute('selected', true)
@@ -49,61 +56,68 @@ export class UI {
         // Save prevIn and prevOut
         this.prevOut = this.currencyOutSelected
         this.prevIn = this.currencyInSelected
+
+        console.log('se dispara?');
     }
     saveSelectedIndex() {
-        this.currencyOutSelected = this.currencyOut.options[this.currencyOut.selectedIndex].value
         this.currencyInSelected = this.currencyIn.options[this.currencyIn.selectedIndex].value
+        this.currencyOutSelected = this.currencyOut.options[this.currencyOut.selectedIndex].value
     }
 
 
     async changeCurrency() {
     
-        const currencyInOpts = [...this.currencyIn.options]
-        const currencyOutOpts = [...this.currencyOut.options]
-    
         // Save Selected Index
-        this.saveSelectedIndex()
+        // this.saveSelectedIndex()
     
         // Go through list
-        await this.changeValue(currencyInOpts, this.currencyOutSelected)
-        await this.changeValue(currencyOutOpts, this.currencyInSelected)
-    
+        this.changeValue()
     }
     
-    async changeOption(currency) {
-        const currencyOpts = [...currency.options]
-        const currencySelected = currency.options[currency.selectedIndex].value
-
-        this.saveSelectedIndexOption(currency)
-
-        this.changeValue(currencyOpts, currencySelected)
-    }
-    saveSelectedIndexOption(currency) {
-        (currency.id === 'currencyIn')
-            ? this.currencyInSelected = this.currencyIn.options[this.currencyIn.selectedIndex].value
-            : this.currencyInSelected = this.currencyOut.options[this.currencyOut.selectedIndex].value
-    }
-
-    async changeValue(list, currencySelected) {
+    async changeOption(state) {
         
-        list.forEach(option => {
-    
-            // Remove last atribute 
-            if (option.value === this.prevIn || option.value === this.prevOut) {
-                option.removeAttribute('selected', true);
-                console.log('-->' + this.prevIn);
-            }
-    
-            // Add atribute
-            if (option.value === currencySelected) {
-                console.log('=>' + currencySelected);
-                this.prevIn = this.currencyInSelected
-                this.prevOut = this.currencyOutSelected
-    
-                
-                // currencyInSelected = currencyOutSelected
-                option.setAttribute('selected', true);
-            }
-        });
+        // Save Selected Index
+        this.saveSelectedIndex()
+        
+        this.clearList(state)
+
+
+        let option
+        if (state === 'in') 
+            option = document.getElementById(`in-${this.currencyInSelected}`)
+         else 
+            option = document.getElementById(`out-${this.currencyOutSelected}`)
+        
+        option.setAttribute('selected', true);
+        console.log(`${state}-${this.currencyInSelected}`);
+        // console.log(option);
+
+    }
+
+    changeValue() {
+        const IN =  this.currencyIn.selectedIndex
+        const OUT = this.currencyOut.selectedIndex
+        console.log(IN, OUT);
+        this.clearLists()
+        
+        
+        console.log('------------------');
+        // this.clearLists()
+
+        // Change
+        this.currencyIn.selectedIndex  = OUT
+        this.currencyOut.selectedIndex = IN
+        currencyIn.options[currencyIn.selectedIndex].setAttribute('selected', true);
+        currencyOut.options[currencyOut.selectedIndex].setAttribute('selected', true);
+    }
+    clearLists() {
+        this.clearList('in')
+        this.clearList('out')
+    }
+    clearList(state) {
+
+        (state === 'in')
+            ? [...this.currencyIn.options].forEach(option => option.removeAttribute('selected', true))
+            : [...this.currencyOut.options].forEach(option => option.removeAttribute('selected', true))
     }
 }

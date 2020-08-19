@@ -43,14 +43,15 @@ async function fillList() {
 }
 
 
-function changeCurrency(e) {
+async function changeCurrency(e) {
     e.preventDefault()
 
-    _UI.changeCurrency()
+    _UI.changeValue()
 }
 function changeOption(e) {
     // console.log(e.target.id);
-    // console.log(currencyIn.id);
-    _UI.changeOption(currencyIn)
-    // _UI.changeOption(currencyOut)
+    (e.target.id === 'currencyIn')
+        ? _UI.changeOption('in')
+        : _UI.changeOption(out)
+
 }
