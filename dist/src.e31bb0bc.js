@@ -1759,12 +1759,14 @@ var UI = /*#__PURE__*/function () {
     key: "fillList",
     value: function () {
       var _fillList = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(currencyList) {
-        var fragment, code, option, name;
+        var fragmentIn, fragmentOut, countId, code, option, name;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                fragment = document.createDocumentFragment();
+                fragmentIn = document.createDocumentFragment();
+                fragmentOut = document.createDocumentFragment();
+                countId = 0;
 
                 for (code in currencyList) {
                   option = document.createElement('option');
@@ -1772,11 +1774,16 @@ var UI = /*#__PURE__*/function () {
                   // Insert the name of de currency
 
                   option.textContent = name;
-                  fragment.appendChild(option);
+                  option.id = countId;
+                  fragmentIn.appendChild(option.cloneNode(true));
+                  fragmentOut.appendChild(option.cloneNode(true));
+                  countId++;
                 }
 
-                this.currencyIn.appendChild(fragment.cloneNode(true));
-                this.currencyOut.appendChild(fragment.cloneNode(true)); // Marked US Dollar and Venezuelan Bolivar
+                console.log(fragmentIn);
+                console.log(fragmentOut);
+                this.currencyIn.appendChild(fragmentIn.cloneNode(true));
+                this.currencyOut.appendChild(fragmentOut.cloneNode(true)); // Marked US Dollar and Venezuelan Bolivar
 
                 this.currencyIn.options[this.currencyIn.selectedIndex].setAttribute('selected', true);
                 this.currencyOut.options[this.currencyOut.selectedIndex + 1].setAttribute('selected', true); // Save Selected Index
@@ -1785,8 +1792,9 @@ var UI = /*#__PURE__*/function () {
 
                 this.prevOut = this.currencyOutSelected;
                 this.prevIn = this.currencyInSelected;
+                console.log('se dispara?');
 
-              case 9:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -1803,31 +1811,23 @@ var UI = /*#__PURE__*/function () {
   }, {
     key: "saveSelectedIndex",
     value: function saveSelectedIndex() {
-      this.currencyOutSelected = this.currencyOut.options[this.currencyOut.selectedIndex].value;
       this.currencyInSelected = this.currencyIn.options[this.currencyIn.selectedIndex].value;
+      this.currencyOutSelected = this.currencyOut.options[this.currencyOut.selectedIndex].value;
     }
   }, {
     key: "changeCurrency",
     value: function () {
       var _changeCurrency = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
-        var currencyInOpts, currencyOutOpts;
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                currencyInOpts = (0, _toConsumableArray2.default)(this.currencyIn.options);
-                currencyOutOpts = (0, _toConsumableArray2.default)(this.currencyOut.options); // Save Selected Index
+                // Save Selected Index
+                // this.saveSelectedIndex()
+                // Go through list
+                this.changeValue();
 
-                this.saveSelectedIndex(); // Go through list
-
-                _context2.next = 5;
-                return this.changeValue(currencyInOpts, this.currencyOutSelected);
-
-              case 5:
-                _context2.next = 7;
-                return this.changeValue(currencyOutOpts, this.currencyInSelected);
-
-              case 7:
+              case 1:
               case "end":
                 return _context2.stop();
             }
@@ -1844,18 +1844,20 @@ var UI = /*#__PURE__*/function () {
   }, {
     key: "changeOption",
     value: function () {
-      var _changeOption = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(currency) {
-        var currencyOpts, currencySelected;
+      var _changeOption = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(state) {
+        var option;
         return _regenerator.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                currencyOpts = (0, _toConsumableArray2.default)(currency.options);
-                currencySelected = currency.options[currency.selectedIndex].value;
-                this.saveSelectedIndexOption(currency);
-                this.changeValue(currencyOpts, currencySelected);
+                // Save Selected Index
+                this.saveSelectedIndex();
+                this.clearList(state);
+                if (state === 'in') option = document.getElementById("in-".concat(this.currencyInSelected));else option = document.getElementById("out-".concat(this.currencyOutSelected));
+                option.setAttribute('selected', true);
+                console.log("".concat(state, "-").concat(this.currencyInSelected)); // console.log(option);
 
-              case 4:
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -1870,51 +1872,35 @@ var UI = /*#__PURE__*/function () {
       return changeOption;
     }()
   }, {
-    key: "saveSelectedIndexOption",
-    value: function saveSelectedIndexOption(currency) {
-      currency.id === 'currencyIn' ? this.currencyInSelected = this.currencyIn.options[this.currencyIn.selectedIndex].value : this.currencyInSelected = this.currencyOut.options[this.currencyOut.selectedIndex].value;
+    key: "changeValue",
+    value: function changeValue() {
+      var IN = this.currencyIn.selectedIndex;
+      var OUT = this.currencyOut.selectedIndex;
+      console.log(IN, OUT);
+      this.clearLists();
+      console.log('------------------'); // this.clearLists()
+      // Change
+
+      this.currencyIn.selectedIndex = OUT;
+      this.currencyOut.selectedIndex = IN;
+      currencyIn.options[currencyIn.selectedIndex].setAttribute('selected', true);
+      currencyOut.options[currencyOut.selectedIndex].setAttribute('selected', true);
     }
   }, {
-    key: "changeValue",
-    value: function () {
-      var _changeValue = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee4(list, currencySelected) {
-        var _this = this;
-
-        return _regenerator.default.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                list.forEach(function (option) {
-                  // Remove last atribute 
-                  if (option.value === _this.prevIn || option.value === _this.prevOut) {
-                    option.removeAttribute('selected', true);
-                    console.log('-->' + _this.prevIn);
-                  } // Add atribute
-
-
-                  if (option.value === currencySelected) {
-                    console.log('=>' + currencySelected);
-                    _this.prevIn = _this.currencyInSelected;
-                    _this.prevOut = _this.currencyOutSelected; // currencyInSelected = currencyOutSelected
-
-                    option.setAttribute('selected', true);
-                  }
-                });
-
-              case 1:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }));
-
-      function changeValue(_x3, _x4) {
-        return _changeValue.apply(this, arguments);
-      }
-
-      return changeValue;
-    }()
+    key: "clearLists",
+    value: function clearLists() {
+      this.clearList('in');
+      this.clearList('out');
+    }
+  }, {
+    key: "clearList",
+    value: function clearList(state) {
+      state === 'in' ? (0, _toConsumableArray2.default)(this.currencyIn.options).forEach(function (option) {
+        return option.removeAttribute('selected', true);
+      }) : (0, _toConsumableArray2.default)(this.currencyOut.options).forEach(function (option) {
+        return option.removeAttribute('selected', true);
+      });
+    }
   }]);
   return UI;
 }();
@@ -1993,17 +1979,33 @@ function _fillList() {
   return _fillList.apply(this, arguments);
 }
 
-function changeCurrency(e) {
-  e.preventDefault();
+function changeCurrency(_x) {
+  return _changeCurrency.apply(this, arguments);
+}
 
-  _UI.changeCurrency();
+function _changeCurrency() {
+  _changeCurrency = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {
+    return _regenerator.default.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            e.preventDefault();
+
+            _UI.changeValue();
+
+          case 2:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _changeCurrency.apply(this, arguments);
 }
 
 function changeOption(e) {
   // console.log(e.target.id);
-  // console.log(currencyIn.id);
-  _UI.changeOption(currencyIn); // _UI.changeOption(currencyOut)
-
+  e.target.id === 'currencyIn' ? _UI.changeOption('in') : _UI.changeOption(out);
 }
 },{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./API":"app/js/API.js","./UI":"app/js/UI.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -2039,7 +2041,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52718" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61415" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
