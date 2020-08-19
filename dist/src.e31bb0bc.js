@@ -1650,7 +1650,277 @@ var API = /*#__PURE__*/function () {
 }();
 
 exports.API = API;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","./db/db.json":"app/js/db/db.json"}],"app/js/app.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","./db/db.json":"app/js/db/db.json"}],"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js":[function(require,module,exports) {
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+module.exports = _arrayLikeToArray;
+},{}],"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
+var arrayLikeToArray = require("./arrayLikeToArray");
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+}
+
+module.exports = _arrayWithoutHoles;
+},{"./arrayLikeToArray":"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js"}],"../node_modules/@babel/runtime/helpers/iterableToArray.js":[function(require,module,exports) {
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+},{}],"../node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js":[function(require,module,exports) {
+var arrayLikeToArray = require("./arrayLikeToArray");
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+
+module.exports = _unsupportedIterableToArray;
+},{"./arrayLikeToArray":"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js"}],"../node_modules/@babel/runtime/helpers/nonIterableSpread.js":[function(require,module,exports) {
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+module.exports = _nonIterableSpread;
+},{}],"../node_modules/@babel/runtime/helpers/toConsumableArray.js":[function(require,module,exports) {
+var arrayWithoutHoles = require("./arrayWithoutHoles");
+
+var iterableToArray = require("./iterableToArray");
+
+var unsupportedIterableToArray = require("./unsupportedIterableToArray");
+
+var nonIterableSpread = require("./nonIterableSpread");
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+},{"./arrayWithoutHoles":"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js","./iterableToArray":"../node_modules/@babel/runtime/helpers/iterableToArray.js","./unsupportedIterableToArray":"../node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js","./nonIterableSpread":"../node_modules/@babel/runtime/helpers/nonIterableSpread.js"}],"app/js/UI.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UI = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var UI = /*#__PURE__*/function () {
+  function UI() {
+    (0, _classCallCheck2.default)(this, UI);
+    (0, _defineProperty2.default)(this, "currencyIn", document.getElementById('currencyIn'));
+    (0, _defineProperty2.default)(this, "currencyOut", document.getElementById('currencyOut'));
+    (0, _defineProperty2.default)(this, "lastOption", void 0);
+    (0, _defineProperty2.default)(this, "prevOut", void 0);
+    (0, _defineProperty2.default)(this, "prevIn", void 0);
+    (0, _defineProperty2.default)(this, "currencyOutSelected", void 0);
+    (0, _defineProperty2.default)(this, "currencyInSelected", void 0);
+  }
+
+  (0, _createClass2.default)(UI, [{
+    key: "validate",
+    value: function validate(e) {
+      var value = e.target.value;
+      value.match(/^[\d\.\s]+$/gi) ? input.classList.remove('input--invalid') : input.classList.add('input--invalid');
+    }
+  }, {
+    key: "cleanInput",
+    value: function cleanInput(e) {
+      var value = e.target.value;
+      if (value === '') input.classList.remove('input--invalid');
+    }
+  }, {
+    key: "fillList",
+    value: function () {
+      var _fillList = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(currencyList) {
+        var fragment, code, option, name;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                fragment = document.createDocumentFragment();
+
+                for (code in currencyList) {
+                  option = document.createElement('option');
+                  name = currencyList[code].name; // Insert de code of de currency: option.textContent = code
+                  // Insert the name of de currency
+
+                  option.textContent = name;
+                  fragment.appendChild(option);
+                }
+
+                this.currencyIn.appendChild(fragment.cloneNode(true));
+                this.currencyOut.appendChild(fragment.cloneNode(true)); // Marked US Dollar and Venezuelan Bolivar
+
+                this.currencyIn.options[this.currencyIn.selectedIndex].setAttribute('selected', true);
+                this.currencyOut.options[this.currencyOut.selectedIndex + 1].setAttribute('selected', true); // Save Selected Index
+
+                this.saveSelectedIndex(); // Save prevIn and prevOut
+
+                this.prevOut = this.currencyOutSelected;
+                this.prevIn = this.currencyInSelected;
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function fillList(_x) {
+        return _fillList.apply(this, arguments);
+      }
+
+      return fillList;
+    }()
+  }, {
+    key: "saveSelectedIndex",
+    value: function saveSelectedIndex() {
+      this.currencyOutSelected = this.currencyOut.options[this.currencyOut.selectedIndex].value;
+      this.currencyInSelected = this.currencyIn.options[this.currencyIn.selectedIndex].value;
+    }
+  }, {
+    key: "changeCurrency",
+    value: function () {
+      var _changeCurrency = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
+        var currencyInOpts, currencyOutOpts;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                currencyInOpts = (0, _toConsumableArray2.default)(this.currencyIn.options);
+                currencyOutOpts = (0, _toConsumableArray2.default)(this.currencyOut.options); // Save Selected Index
+
+                this.saveSelectedIndex(); // Go through list
+
+                _context2.next = 5;
+                return this.changeValue(currencyInOpts, this.currencyOutSelected);
+
+              case 5:
+                _context2.next = 7;
+                return this.changeValue(currencyOutOpts, this.currencyInSelected);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function changeCurrency() {
+        return _changeCurrency.apply(this, arguments);
+      }
+
+      return changeCurrency;
+    }()
+  }, {
+    key: "changeOption",
+    value: function () {
+      var _changeOption = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(currency) {
+        var currencyOpts, currencySelected;
+        return _regenerator.default.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                currencyOpts = (0, _toConsumableArray2.default)(currency.options);
+                currencySelected = currency.options[currency.selectedIndex].value;
+                this.saveSelectedIndexOption(currency);
+                this.changeValue(currencyOpts, currencySelected);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function changeOption(_x2) {
+        return _changeOption.apply(this, arguments);
+      }
+
+      return changeOption;
+    }()
+  }, {
+    key: "saveSelectedIndexOption",
+    value: function saveSelectedIndexOption(currency) {
+      currency.id === 'currencyIn' ? this.currencyInSelected = this.currencyIn.options[this.currencyIn.selectedIndex].value : this.currencyInSelected = this.currencyOut.options[this.currencyOut.selectedIndex].value;
+    }
+  }, {
+    key: "changeValue",
+    value: function () {
+      var _changeValue = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee4(list, currencySelected) {
+        var _this = this;
+
+        return _regenerator.default.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                list.forEach(function (option) {
+                  // Remove last atribute 
+                  if (option.value === _this.prevIn || option.value === _this.prevOut) {
+                    option.removeAttribute('selected', true);
+                    console.log('-->' + _this.prevIn);
+                  } // Add atribute
+
+
+                  if (option.value === currencySelected) {
+                    console.log('=>' + currencySelected);
+                    _this.prevIn = _this.currencyInSelected;
+                    _this.prevOut = _this.currencyOutSelected; // currencyInSelected = currencyOutSelected
+
+                    option.setAttribute('selected', true);
+                  }
+                });
+
+              case 1:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function changeValue(_x3, _x4) {
+        return _changeValue.apply(this, arguments);
+      }
+
+      return changeValue;
+    }()
+  }]);
+  return UI;
+}();
+
+exports.UI = UI;
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js"}],"app/js/app.js":[function(require,module,exports) {
 "use strict";
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
@@ -1659,33 +1929,39 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _API2 = require("./API");
 
+var _UI2 = require("./UI");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // imports
 // Variables
 var screen = document.getElementById('screen'),
     input = document.getElementById('input'),
-    currencyIn = document.getElementById('currency-in'),
-    currencyOut = document.getElementById('currency-out'),
+    currencyField = document.getElementById('currencyField'),
+    currencyIn = document.getElementById('currencyIn'),
+    currencyOut = document.getElementById('currencyOut'),
     change = document.getElementById('change'),
     reset = document.getElementById('reset'),
     submit = document.getElementById('submit'); // Object instances
 
-var _API = new _API2.API(); // Listeners ===========================================
+var _API = new _API2.API();
+
+var _UI = new _UI2.UI(); // Listeners ===========================================
 
 
 addEventListener('DOMContentLoaded', fillList);
 input.addEventListener('keyup', validate);
-input.addEventListener('blur', cleanInput); // Functions ===========================================
+input.addEventListener('blur', cleanInput);
+currencyIn.addEventListener('change', changeOption);
+currencyOut.addEventListener('change', changeOption);
+change.addEventListener('click', changeCurrency); // Functions ===========================================
 
 function validate(e) {
-  var value = e.target.value;
-  value.match(/^[\d\.\s]+$/gi) ? input.classList.remove('input--invalid') : input.classList.add('input--invalid');
+  _UI.validate(e);
 }
 
 function cleanInput(e) {
-  var value = e.target.value;
-  if (value === '') input.classList.remove('input--invalid');
+  _UI.cleanInput(e);
 }
 
 function fillList() {
@@ -1694,7 +1970,7 @@ function fillList() {
 
 function _fillList() {
   _fillList = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-    var currencyList, fragment, code, option, name;
+    var currencyList;
     return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -1704,25 +1980,10 @@ function _fillList() {
 
           case 2:
             currencyList = _API.currencyList;
-            console.log(currencyList.USD);
-            fragment = document.createDocumentFragment();
-            console.log(fragment);
 
-            for (code in currencyList) {
-              option = document.createElement('option');
-              name = currencyList[code].name; // Inserte de code of de currency: option.textContent = code
-              // Inserte the name of de currency
+            _UI.fillList(currencyList);
 
-              option.textContent = name;
-              fragment.appendChild(option);
-            }
-
-            currencyIn.appendChild(fragment.cloneNode(true));
-            currencyOut.appendChild(fragment.cloneNode(true)); // Marked Venezuelan Bolivar
-
-            currencyOut.options[currencyOut.selectedIndex + 1].setAttribute('selected', "selected");
-
-          case 10:
+          case 4:
           case "end":
             return _context.stop();
         }
@@ -1731,7 +1992,20 @@ function _fillList() {
   }));
   return _fillList.apply(this, arguments);
 }
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./API":"app/js/API.js"}],"index.js":[function(require,module,exports) {
+
+function changeCurrency(e) {
+  e.preventDefault();
+
+  _UI.changeCurrency();
+}
+
+function changeOption(e) {
+  // console.log(e.target.id);
+  // console.log(currencyIn.id);
+  _UI.changeOption(currencyIn); // _UI.changeOption(currencyOut)
+
+}
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./API":"app/js/API.js","./UI":"app/js/UI.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./app/scss/main.scss");
@@ -1765,7 +2039,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49813" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52718" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

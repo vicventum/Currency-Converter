@@ -48,6 +48,7 @@ select {
   background-color: transparent;
   border: none;
   text-align: center;
+  min-width: 100%;
 }
 
 option {
