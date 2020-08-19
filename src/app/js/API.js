@@ -1,9 +1,29 @@
+// CDF - EEK - ERN - LTL - LVL - TOP - ZWL
+import db from './db/db.json'  // FIXME:
 export class API {
+    DB_CURRENCY = 'https://gist.githubusercontent.com/vicventum/af3d829794d25d3f29741aaa21c0c147/raw/e436df97aa0990df7b50772780f5c12e36ac1654/Common-Currency.min.json'
+    
+    
     API_KEY = 'f901ivabhvt4pMh4W2wStKhVEGrkfOz2tR6E7wGHgalcU'
-    // CDF - EEK - ERN - LTL - LVL - TOP - ZWL
+    currencyList = {}
 
+    // getters y setters
     get getData() {return this.data}
     set setData(data) {this.data = Object.assign({}, data)}
+
+
+    async getCurrencyCodes() {
+        try {
+            // const res = await fetch(db)
+            // const rawData = await res.json()
+            // this.currencyList = {...rawData}
+
+            this.currencyList = await db // FIXME:
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async getWeather(mode) {
         let coords
