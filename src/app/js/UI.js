@@ -22,7 +22,7 @@ export class UI {
     }
 
 
-    async fillList(currencyList) {
+    fillList(currencyList) {
     
         const fragmentIn = document.createDocumentFragment()
         const fragmentOut = document.createDocumentFragment()
@@ -50,6 +50,9 @@ export class UI {
         // Marked US Dollar and Venezuelan Bolivar
         this.currencyIn.options[this.currencyIn.selectedIndex].setAttribute('selected', true)
         this.currencyOut.options[this.currencyOut.selectedIndex + 1].setAttribute('selected', true)
+        // Save last selected index of currencyIn and currencyOut
+        this.prevIn =  currencyIn.options[currencyIn.selectedIndex]
+        this.prevOut =  currencyOut.options[currencyOut.selectedIndex]
 
         // Save Selected Index
         this.saveSelectedIndex()
@@ -64,11 +67,14 @@ export class UI {
         
         this.clearList(state)
 
-        if (state === 'in')
-            currencyIn.options[currencyIn.selectedIndex].setAttribute('selected', true);
-         else 
-            currencyOut.options[currencyOut.selectedIndex].setAttribute('selected', true)
-
+        if (state === 'in') {
+            currencyIn.options[currencyIn.selectedIndex].setAttribute('selected',  true);
+            this.prevIn =  currencyIn.options[currencyIn.selectedIndex]
+        }
+         else {
+             currencyOut.options[currencyOut.selectedIndex].setAttribute('selected', true)
+             this.prevOut =  currencyOut.options[currencyOut.selectedIndex]
+         }
     }
 
     changeCurrency() {
@@ -77,27 +83,23 @@ export class UI {
         console.log(IN, OUT);
 
         this.clearLists()
-        // currencyIn.options[currencyIn.selectedIndex].removeAttribute('selected', true)
-        // currencyOut.options[currencyOut.selectedIndex].removeAttribute('selected', true)
         
         // Change
         this.currencyIn.selectedIndex  = OUT
         this.currencyOut.selectedIndex = IN
         currencyIn.options[currencyIn.selectedIndex].setAttribute('selected', true)
         currencyOut.options[currencyOut.selectedIndex].setAttribute('selected', true)
+
+        this.prevIn =  currencyIn.options[currencyIn.selectedIndex]
+        this.prevOut =  currencyOut.options[currencyOut.selectedIndex]
     }
     clearLists() {
         this.clearList('in')
         this.clearList('out')
     }
     clearList(state) {
-        console.log( currencyIn.options[currencyIn.selectedIndex]);
-       
-
         (state === 'in')
-            ? [...this.currencyIn.options].forEach(option => option.removeAttribute('selected', true))
-            : [...this.currencyOut.options].forEach(option => option.removeAttribute('selected', true))
-            // ? currencyIn.options[currencyIn.selectedIndex].removeAttribute('selected')
-            // : currencyOut.options[currencyOut.selectedIndex].removeAttribute('selected')
+            ? this.prevIn.removeAttribute('selected')
+            : this.prevOut.removeAttribute('selected')
     }
 }
