@@ -46,12 +46,12 @@ async function fillList() {
 async function changeCurrency(e) {
     e.preventDefault()
 
-    _UI.changeValue()
+    _UI.changeCurrency()
 }
 function changeOption(e) {
     // console.log(e.target.id);
     (e.target.id === 'currencyIn')
         ? _UI.changeOption('in')
-        : _UI.changeOption(out)
+        : _UI.changeOption('out')
 
 }
