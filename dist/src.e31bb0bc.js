@@ -1526,6 +1526,7 @@ var _db = _interopRequireDefault(require("./db/db.json"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // CDF - EEK - ERN - LTL - LVL - TOP - ZWL
+// https://fcsapi.com/document/forex-api#forexsupportedcurrency
 // FIXME:
 var API = /*#__PURE__*/function () {
   function API() {
@@ -1533,6 +1534,9 @@ var API = /*#__PURE__*/function () {
     (0, _defineProperty2.default)(this, "DB_CURRENCY", 'https://gist.githubusercontent.com/vicventum/af3d829794d25d3f29741aaa21c0c147/raw/e436df97aa0990df7b50772780f5c12e36ac1654/Common-Currency.min.json');
     (0, _defineProperty2.default)(this, "API_KEY", 'f901ivabhvt4pMh4W2wStKhVEGrkfOz2tR6E7wGHgalcU');
     (0, _defineProperty2.default)(this, "currencyList", {});
+    (0, _defineProperty2.default)(this, "changeValue", void 0);
+    (0, _defineProperty2.default)(this, "value1xIn", void 0);
+    (0, _defineProperty2.default)(this, "value1xOut", void 0);
   }
 
   (0, _createClass2.default)(API, [{
@@ -1572,73 +1576,45 @@ var API = /*#__PURE__*/function () {
       return getCurrencyCodes;
     }()
   }, {
-    key: "getWeather",
+    key: "getCurrencyValue",
     value: function () {
-      var _getWeather = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(mode) {
-        var coords, URL_ONE_CALL, res, rawData;
+      var _getCurrencyValue = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(valueIn, valueOut) {
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (mode) {
-                  coords = this.currentLocation.coords;
-                } else {
-                  coords = this.location.coords;
-                }
+                try {// const res = await fetch(`https://fcsapi.com/api-v2/forex/converter?pair1=${valueIn}&pair2=${valueOut}&amount=1&access_key=${this.API_KEY}`)
+                  // const rawData = await res.json()
+                  // this.changeValue = rawData.response.total
+                  // this.value1xIn = rawData.response[`price_1x_${valueIn}`]
+                  // this.value1xOut = rawData.response[`price_1x_${valueOut}`]
+                  // console.log(this.changeValue, this.value1xIn, this.value1xOut);
+                } catch (error) {}
 
-                URL_ONE_CALL = "https://api.openweathermap.org/data/2.5/onecall?lat=".concat(coords.latitude, "&lon=").concat(coords.longitude, "&exclude=minutely&appid=").concat(this.API_KEY);
-                _context2.next = 4;
-                return fetch(URL_ONE_CALL);
-
-              case 4:
-                res = _context2.sent;
-                _context2.next = 7;
-                return res.json();
-
-              case 7:
-                rawData = _context2.sent;
-                console.log(URL_ONE_CALL);
-                this.saveData(rawData);
-
-              case 10:
+              case 1:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee2);
       }));
 
-      function getWeather(_x) {
-        return _getWeather.apply(this, arguments);
+      function getCurrencyValue(_x, _x2) {
+        return _getCurrencyValue.apply(this, arguments);
       }
 
-      return getWeather;
+      return getCurrencyValue;
     }()
   }, {
-    key: "saveData",
-    value: function saveData(rawData) {
-      // Reiniciando la plantilla del objeto
-      this.data = {
-        hourly: [],
-        daily: []
-      };
-      this.data.timezone = rawData.timezone;
-      this.data.currentTime = this.formattingHour(rawData.current.dt);
-      this.data.temp = rawData.current.temp;
-      this.data.feels_like = rawData.current.feels_like;
-      this.data.main = rawData.current.weather[0].main;
-      this.data.description = rawData.current.weather[0].description;
-      this.data.icon = rawData.current.weather[0].icon;
-      this.data.clouds = rawData.current.clouds;
-      this.data.wind_speed = rawData.current.wind_speed;
-      this.data.pressure = rawData.current.pressure;
-      this.data.humidity = rawData.current.humidity;
-    }
-  }, {
-    key: "getData",
+    key: "getChangeValue",
     // getters y setters
     get: function get() {
-      return this.data;
+      return this.changeValue;
+    }
+  }, {
+    key: "getCurrencyList",
+    get: function get() {
+      return this.currencyList;
     }
   }, {
     key: "setData",
@@ -1707,6 +1683,8 @@ var UI = /*#__PURE__*/function () {
         // Insert the name of de currency
 
         option.textContent = name;
+        option.setAttribute('data-code', code);
+        option.setAttribute('data-symbol', currencyList[code].symbol_native);
         option.id = "in-".concat(countId);
         fragmentIn.appendChild(option.cloneNode(true));
         option.id = "out-".concat(countId);
@@ -1830,7 +1808,8 @@ input.addEventListener('keyup', validate);
 input.addEventListener('blur', cleanInput);
 currencyIn.addEventListener('change', changeOption);
 currencyOut.addEventListener('change', changeOption);
-change.addEventListener('click', changeCurrency); // Functions ===========================================
+change.addEventListener('click', changeCurrency);
+submit.addEventListener('click', getData); // Functions ===========================================
 
 function validate(e) {
   _UI.validate(e);
@@ -1838,11 +1817,13 @@ function validate(e) {
 
 function cleanInput(e) {
   _UI.cleanInput(e);
-}
+} // -------------
+
 
 function fillList() {
   return _fillList.apply(this, arguments);
-}
+} // -------------
+
 
 function _fillList() {
   _fillList = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
@@ -1859,7 +1840,9 @@ function _fillList() {
 
             _UI.fillList(currencyList);
 
-          case 4:
+            _API.getCurrencyValue('USD', 'VEF');
+
+          case 5:
           case "end":
             return _context.stop();
         }
@@ -1896,6 +1879,11 @@ function _changeCurrency() {
 function changeOption(e) {
   // console.log(e.target.id);
   e.target.id === 'currencyIn' ? _UI.changeOption('in') : _UI.changeOption('out');
+} // -------------
+
+
+function getData(e) {
+  e.preventDefault(); // _API.getCurrencyValue()
 }
 },{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./API":"app/js/API.js","./UI":"app/js/UI.js"}],"index.js":[function(require,module,exports) {
 "use strict";

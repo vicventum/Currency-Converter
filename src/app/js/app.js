@@ -24,24 +24,25 @@ input.addEventListener('blur', cleanInput)
 currencyIn.addEventListener('change', changeOption)
 currencyOut.addEventListener('change', changeOption)
 change.addEventListener('click', changeCurrency)
+submit.addEventListener('click', getData)
 
 // Functions ===========================================
 function validate(e) {
     _UI.validate(e)
 }
-
 function cleanInput(e) {
     _UI.cleanInput(e)
 }
-
+// -------------
 
 async function fillList() {
     await _API.getCurrencyCodes()
     const currencyList = _API.currencyList
 
     _UI.fillList(currencyList)
+    _API.getCurrencyValue('USD', 'VEF')
 }
-
+// -------------
 
 async function changeCurrency(e) {
     e.preventDefault()
@@ -54,4 +55,10 @@ function changeOption(e) {
         ? _UI.changeOption('in')
         : _UI.changeOption('out')
 
+}
+// -------------
+function getData(e) {
+    e.preventDefault()
+
+    // _API.getCurrencyValue()
 }
