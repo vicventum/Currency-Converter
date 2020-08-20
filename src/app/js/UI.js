@@ -35,6 +35,9 @@ export class UI {
             // Insert the name of de currency
             option.textContent = name
 
+            option.setAttribute('data-code', code)
+            option.setAttribute('data-symbol', currencyList[code].symbol_native)
+
             option.id = `in-${countId}`
             fragmentIn.appendChild(option.cloneNode(true))
             option.id = `out-${countId}`
