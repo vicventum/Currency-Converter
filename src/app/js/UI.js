@@ -1,12 +1,24 @@
 export class UI {
     currencyIn = document.getElementById('currencyIn')
     currencyOut = document.getElementById('currencyOut')
+    input = document.getElementById('input')
+    screen = document.getElementById('screen')
 
     lastOption
     prevOut
     prevIn
     currencyOutSelected
     currencyInSelected
+
+    get getCurrencySelected() {   
+        return {
+            inSelected: currencyIn.options[currencyIn.selectedIndex].dataset.code,
+            outSelected: currencyOut.options[currencyOut.selectedIndex].dataset.code
+        }
+    }
+    get getValueToChange() {
+        return input.valueAsNumber
+    }
     
 
     validate(e) {
@@ -104,5 +116,35 @@ export class UI {
         (state === 'in')
             ? this.prevIn.removeAttribute('selected')
             : this.prevOut.removeAttribute('selected')
+    }
+
+    render(value) {
+        const valueString = value.toString()
+
+        // Split point
+        const valueInt = (valueString.split('.'))[0]
+        const valueFloat = (valueString.split('.'))[1]
+        console.log(valueInt);
+
+        const cant = Math.ceil(valueInt.length / 3)
+        console.log('>>>' + cant);
+
+        const valueArray = []
+
+        let unit = -3
+        
+        for (let i = 1; i <= cant; i++) {
+            const slideValue = ((unit + 3) === 0) ? undefined : (unit + 3)
+            valueArray.unshift(valueInt.slice(unit, slideValue))
+            unit -= 3
+            console.log('> ' + unit);
+        }
+        const valueStringFormated = valueArray.join(' ')
+        console.log(valueStringFormated);
+
+        if (valueString.length > 5) {
+            this.screen.style.fontSize = '3rem'
+        }
+        this.screen.textContent = valueStringFormated
     }
 }
