@@ -1030,6 +1030,10 @@ module.exports = {
     "name": "US Dollar",
     "symbol_native": "$"
   },
+  "VEF": {
+    "name": "Venezuelan Bolívar",
+    "symbol_native": "Bs.F."
+  },
   "CAD": {
     "name": "Canadian Dollar",
     "symbol_native": "$"
@@ -1470,10 +1474,6 @@ module.exports = {
     "name": "Uzbekistan Som",
     "symbol_native": "UZS"
   },
-  "VEF": {
-    "name": "Venezuelan Bolívar",
-    "symbol_native": "Bs.F."
-  },
   "VND": {
     "name": "Vietnamese Dong",
     "symbol_native": "₫"
@@ -1675,6 +1675,7 @@ var UI = /*#__PURE__*/function () {
     (0, _defineProperty2.default)(this, "prevIn", void 0);
     (0, _defineProperty2.default)(this, "currencyOutSelected", void 0);
     (0, _defineProperty2.default)(this, "currencyInSelected", void 0);
+    (0, _defineProperty2.default)(this, "symbolOut", void 0);
   }
 
   (0, _createClass2.default)(UI, [{
@@ -1811,8 +1812,9 @@ var UI = /*#__PURE__*/function () {
 
         var valueStringFormated = valueArray.join(' ');
         console.log(valueStringFormated);
-        if (valueString.length > 5) this.screen.style.fontSize = '3rem';else this.rootStylesGet.getPropertyValue('--f-big');
-        this.screen.textContent = "".concat(valueStringFormated, ".").concat(valueFloat);
+        if (valueString.length > 6) this.screen.style.fontSize = '3rem';else this.screen.style.fontSize = this.rootStylesGet.getPropertyValue('--f-big');
+        console.log(this.rootStylesGet.getPropertyValue('--f-big'));
+        this.screen.innerHTML = "".concat(valueStringFormated, ".").concat(valueFloat, "<br>").concat(this.symbolOut);
       } else {
         this.screen.style.fontSize = '3rem';
         this.screen.textContent = 'No Internet :(';
@@ -1827,6 +1829,7 @@ var UI = /*#__PURE__*/function () {
   }, {
     key: "getCurrencySelected",
     get: function get() {
+      this.symbolOut = currencyOut.options[currencyOut.selectedIndex].dataset.symbol;
       return {
         inSelected: currencyIn.options[currencyIn.selectedIndex].dataset.code,
         outSelected: currencyOut.options[currencyOut.selectedIndex].dataset.code
@@ -2020,22 +2023,25 @@ function getDataSuggestion(_x3) {
 
 function _getDataSuggestion() {
   _getDataSuggestion = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee5(e) {
-    var valueSuggestion, value;
+    var valueSuggestion, _UI$getCurrencySelect3, inSelected, outSelected, value;
+
     return _regenerator.default.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
             e.preventDefault();
             valueSuggestion = parseInt(e.target.textContent);
-            _context5.next = 4;
+            input.value = valueSuggestion;
+            _UI$getCurrencySelect3 = _UI.getCurrencySelected, inSelected = _UI$getCurrencySelect3.inSelected, outSelected = _UI$getCurrencySelect3.outSelected;
+            _context5.next = 6;
             return _API.getCurrencyValue(inSelected, outSelected);
 
-          case 4:
+          case 6:
             value = valueSuggestion * _API.getChangeValue;
 
             _UI.render(value);
 
-          case 6:
+          case 8:
           case "end":
             return _context5.stop();
         }
@@ -2084,7 +2090,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59540" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55690" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
