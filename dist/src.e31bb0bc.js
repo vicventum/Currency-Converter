@@ -1024,15 +1024,11 @@ function _defineProperty(obj, key, value) {
 }
 
 module.exports = _defineProperty;
-},{}],"app/js/db/db.json":[function(require,module,exports) {
+},{}],"app/js/db/db.min.json":[function(require,module,exports) {
 module.exports = {
   "USD": {
     "name": "US Dollar",
     "symbol_native": "$"
-  },
-  "VEF": {
-    "name": "Venezuelan Bolívar",
-    "symbol_native": "Bs.F."
   },
   "CAD": {
     "name": "Canadian Dollar",
@@ -1474,6 +1470,10 @@ module.exports = {
     "name": "Uzbekistan Som",
     "symbol_native": "UZS"
   },
+  "VEF": {
+    "name": "Venezuelan Bolívar",
+    "symbol_native": "Bs.F."
+  },
   "VND": {
     "name": "Vietnamese Dong",
     "symbol_native": "₫"
@@ -1521,7 +1521,7 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
-var _db = _interopRequireDefault(require("./db/db.json"));
+var _dbMin = _interopRequireDefault(require("./db/db.min.json"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1549,7 +1549,7 @@ var API = /*#__PURE__*/function () {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _db.default;
+                return _dbMin.default;
 
               case 3:
                 this.currencyList = _context.sent;
@@ -1643,7 +1643,7 @@ var API = /*#__PURE__*/function () {
 }();
 
 exports.API = API;
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","./db/db.json":"app/js/db/db.json"}],"app/js/UI.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","./db/db.min.json":"app/js/db/db.min.json"}],"app/js/UI.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1670,7 +1670,7 @@ var UI = /*#__PURE__*/function () {
     (0, _defineProperty2.default)(this, "currencyOut", document.getElementById('currencyOut'));
     (0, _defineProperty2.default)(this, "input", document.getElementById('input'));
     (0, _defineProperty2.default)(this, "screen", document.getElementById('screen'));
-    (0, _defineProperty2.default)(this, "lastOption", void 0);
+    (0, _defineProperty2.default)(this, "rootStylesGet", window.getComputedStyle(document.documentElement));
     (0, _defineProperty2.default)(this, "prevOut", void 0);
     (0, _defineProperty2.default)(this, "prevIn", void 0);
     (0, _defineProperty2.default)(this, "currencyOutSelected", void 0);
@@ -1791,31 +1791,38 @@ var UI = /*#__PURE__*/function () {
   }, {
     key: "render",
     value: function render(value) {
-      var valueString = value.toString(); // Split point
+      if (value) {
+        var valueString = value.toString(); // Split point
 
-      var valueInt = valueString.split('.')[0];
-      var valueFloat = valueString.split('.')[1];
-      console.log(valueInt);
-      var cant = Math.ceil(valueInt.length / 3);
-      console.log('>>>' + cant);
-      var valueArray = [];
-      var unit = -3;
+        var valueInt = valueString.split('.')[0];
+        var valueFloat = valueString.split('.')[1];
+        console.log(valueInt);
+        var cant = Math.ceil(valueInt.length / 3);
+        console.log('>>>' + cant);
+        var valueArray = [];
+        var unit = -3;
 
-      for (var i = 1; i <= cant; i++) {
-        var slideValue = unit + 3 === 0 ? undefined : unit + 3;
-        valueArray.unshift(valueInt.slice(unit, slideValue));
-        unit -= 3;
-        console.log('> ' + unit);
-      }
+        for (var i = 1; i <= cant; i++) {
+          var slideValue = unit + 3 === 0 ? undefined : unit + 3;
+          valueArray.unshift(valueInt.slice(unit, slideValue));
+          unit -= 3;
+          console.log('> ' + unit);
+        }
 
-      var valueStringFormated = valueArray.join(' ');
-      console.log(valueStringFormated);
-
-      if (valueString.length > 5) {
+        var valueStringFormated = valueArray.join(' ');
+        console.log(valueStringFormated);
+        if (valueString.length > 5) this.screen.style.fontSize = '3rem';else this.rootStylesGet.getPropertyValue('--f-big');
+        this.screen.textContent = "".concat(valueStringFormated, ".").concat(valueFloat);
+      } else {
         this.screen.style.fontSize = '3rem';
+        this.screen.textContent = 'No Internet :(';
       }
-
-      this.screen.textContent = valueStringFormated;
+    }
+  }, {
+    key: "resetValues",
+    value: function resetValues() {
+      this.screen.textContent = 0;
+      this.input.value = '';
     }
   }, {
     key: "getCurrencySelected",
@@ -1850,12 +1857,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // imports
 // Variables
-var screen = document.getElementById('screen'),
-    input = document.getElementById('input'),
-    currencyField = document.getElementById('currencyField'),
+var input = document.getElementById('input'),
     currencyIn = document.getElementById('currencyIn'),
     currencyOut = document.getElementById('currencyOut'),
     change = document.getElementById('change'),
+    btnsSuggestions = document.querySelectorAll('.btn--suggestion'),
     reset = document.getElementById('reset'),
     submit = document.getElementById('submit'); // Object instances
 
@@ -1870,6 +1876,10 @@ input.addEventListener('blur', cleanInput);
 currencyIn.addEventListener('change', changeOption);
 currencyOut.addEventListener('change', changeOption);
 change.addEventListener('click', changeCurrency);
+btnsSuggestions.forEach(function (btn) {
+  return btn.addEventListener('click', getDataSuggestion);
+});
+reset.addEventListener('click', resetValues);
 submit.addEventListener('click', getData); // Functions ===========================================
 
 function validate(e) {
@@ -1899,10 +1909,11 @@ function _fillList() {
           case 2:
             currencyList = _API.currencyList;
 
-            _UI.fillList(currencyList); // _API.getCurrencyValue('USD', 'VEF')
+            _UI.fillList(currencyList);
 
+            getDataInitial();
 
-          case 4:
+          case 5:
           case "end":
             return _context.stop();
         }
@@ -1942,21 +1953,50 @@ function changeOption(e) {
 } // -------------
 
 
-function getData(_x2) {
-  return _getData.apply(this, arguments);
+function getDataInitial() {
+  return _getDataInitial.apply(this, arguments);
 }
 
-function _getData() {
-  _getData = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(e) {
-    var _UI$getCurrencySelect, inSelected, outSelected, value;
+function _getDataInitial() {
+  _getDataInitial = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3() {
+    var _UI$getCurrencySelect, inSelected, outSelected;
 
     return _regenerator.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            e.preventDefault();
             _UI$getCurrencySelect = _UI.getCurrencySelected, inSelected = _UI$getCurrencySelect.inSelected, outSelected = _UI$getCurrencySelect.outSelected;
-            _context3.next = 4;
+            _context3.next = 3;
+            return _API.getCurrencyValue(inSelected, outSelected);
+
+          case 3:
+            _UI.render(_API.getChangeValue);
+
+          case 4:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _getDataInitial.apply(this, arguments);
+}
+
+function getData(_x2) {
+  return _getData.apply(this, arguments);
+}
+
+function _getData() {
+  _getData = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee4(e) {
+    var _UI$getCurrencySelect2, inSelected, outSelected, value;
+
+    return _regenerator.default.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            e.preventDefault();
+            _UI$getCurrencySelect2 = _UI.getCurrencySelected, inSelected = _UI$getCurrencySelect2.inSelected, outSelected = _UI$getCurrencySelect2.outSelected;
+            _context4.next = 4;
             return _API.getCurrencyValue(inSelected, outSelected);
 
           case 4:
@@ -1966,12 +2006,49 @@ function _getData() {
 
           case 6:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3);
+    }, _callee4);
   }));
   return _getData.apply(this, arguments);
+}
+
+function getDataSuggestion(_x3) {
+  return _getDataSuggestion.apply(this, arguments);
+}
+
+function _getDataSuggestion() {
+  _getDataSuggestion = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee5(e) {
+    var valueSuggestion, value;
+    return _regenerator.default.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            e.preventDefault();
+            valueSuggestion = parseInt(e.target.textContent);
+            _context5.next = 4;
+            return _API.getCurrencyValue(inSelected, outSelected);
+
+          case 4:
+            value = valueSuggestion * _API.getChangeValue;
+
+            _UI.render(value);
+
+          case 6:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+  return _getDataSuggestion.apply(this, arguments);
+}
+
+function resetValues(e) {
+  e.preventDefault();
+
+  _UI.resetValues();
 }
 },{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./API":"app/js/API.js","./UI":"app/js/UI.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -2007,7 +2084,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61415" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59540" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
