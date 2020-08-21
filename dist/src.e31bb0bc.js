@@ -1579,24 +1579,41 @@ var API = /*#__PURE__*/function () {
     key: "getCurrencyValue",
     value: function () {
       var _getCurrencyValue = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(valueIn, valueOut) {
+        var res, rawData;
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                try {// const res = await fetch(`https://fcsapi.com/api-v2/forex/converter?pair1=${valueIn}&pair2=${valueOut}&amount=1&access_key=${this.API_KEY}`)
-                  // const rawData = await res.json()
-                  // this.changeValue = rawData.response.total
-                  // this.value1xIn = rawData.response[`price_1x_${valueIn}`]
-                  // this.value1xOut = rawData.response[`price_1x_${valueOut}`]
-                  // console.log(this.changeValue, this.value1xIn, this.value1xOut);
-                } catch (error) {}
+                _context2.prev = 0;
+                _context2.next = 3;
+                return fetch("https://fcsapi.com/api-v2/forex/converter?pair1=".concat(valueIn, "&pair2=").concat(valueOut, "&amount=1&access_key=").concat(this.API_KEY));
 
-              case 1:
+              case 3:
+                res = _context2.sent;
+                _context2.next = 6;
+                return res.json();
+
+              case 6:
+                rawData = _context2.sent;
+                console.log(rawData);
+                this.changeValue = rawData.response.total;
+                this.value1xIn = rawData.response["price_1x_".concat(valueIn)];
+                this.value1xOut = rawData.response["price_1x_".concat(valueOut)];
+                console.log(this.changeValue, this.value1xIn, this.value1xOut);
+                _context2.next = 17;
+                break;
+
+              case 14:
+                _context2.prev = 14;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
+
+              case 17:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, this, [[0, 14]]);
       }));
 
       function getCurrencyValue(_x, _x2) {
@@ -1651,6 +1668,8 @@ var UI = /*#__PURE__*/function () {
     (0, _classCallCheck2.default)(this, UI);
     (0, _defineProperty2.default)(this, "currencyIn", document.getElementById('currencyIn'));
     (0, _defineProperty2.default)(this, "currencyOut", document.getElementById('currencyOut'));
+    (0, _defineProperty2.default)(this, "input", document.getElementById('input'));
+    (0, _defineProperty2.default)(this, "screen", document.getElementById('screen'));
     (0, _defineProperty2.default)(this, "lastOption", void 0);
     (0, _defineProperty2.default)(this, "prevOut", void 0);
     (0, _defineProperty2.default)(this, "prevIn", void 0);
@@ -1769,6 +1788,48 @@ var UI = /*#__PURE__*/function () {
     value: function clearList(state) {
       state === 'in' ? this.prevIn.removeAttribute('selected') : this.prevOut.removeAttribute('selected');
     }
+  }, {
+    key: "render",
+    value: function render(value) {
+      var valueString = value.toString(); // Split point
+
+      var valueInt = valueString.split('.')[0];
+      var valueFloat = valueString.split('.')[1];
+      console.log(valueInt);
+      var cant = Math.ceil(valueInt.length / 3);
+      console.log('>>>' + cant);
+      var valueArray = [];
+      var unit = -3;
+
+      for (var i = 1; i <= cant; i++) {
+        var slideValue = unit + 3 === 0 ? undefined : unit + 3;
+        valueArray.unshift(valueInt.slice(unit, slideValue));
+        unit -= 3;
+        console.log('> ' + unit);
+      }
+
+      var valueStringFormated = valueArray.join(' ');
+      console.log(valueStringFormated);
+
+      if (valueString.length > 5) {
+        this.screen.style.fontSize = '3rem';
+      }
+
+      this.screen.textContent = valueStringFormated;
+    }
+  }, {
+    key: "getCurrencySelected",
+    get: function get() {
+      return {
+        inSelected: currencyIn.options[currencyIn.selectedIndex].dataset.code,
+        outSelected: currencyOut.options[currencyOut.selectedIndex].dataset.code
+      };
+    }
+  }, {
+    key: "getValueToChange",
+    get: function get() {
+      return input.valueAsNumber;
+    }
   }]);
   return UI;
 }();
@@ -1838,11 +1899,10 @@ function _fillList() {
           case 2:
             currencyList = _API.currencyList;
 
-            _UI.fillList(currencyList);
+            _UI.fillList(currencyList); // _API.getCurrencyValue('USD', 'VEF')
 
-            _API.getCurrencyValue('USD', 'VEF');
 
-          case 5:
+          case 4:
           case "end":
             return _context.stop();
         }
@@ -1882,8 +1942,36 @@ function changeOption(e) {
 } // -------------
 
 
-function getData(e) {
-  e.preventDefault(); // _API.getCurrencyValue()
+function getData(_x2) {
+  return _getData.apply(this, arguments);
+}
+
+function _getData() {
+  _getData = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(e) {
+    var _UI$getCurrencySelect, inSelected, outSelected, value;
+
+    return _regenerator.default.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            e.preventDefault();
+            _UI$getCurrencySelect = _UI.getCurrencySelected, inSelected = _UI$getCurrencySelect.inSelected, outSelected = _UI$getCurrencySelect.outSelected;
+            _context3.next = 4;
+            return _API.getCurrencyValue(inSelected, outSelected);
+
+          case 4:
+            value = _UI.getValueToChange * _API.getChangeValue;
+
+            _UI.render(value);
+
+          case 6:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _getData.apply(this, arguments);
 }
 },{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./API":"app/js/API.js","./UI":"app/js/UI.js"}],"index.js":[function(require,module,exports) {
 "use strict";

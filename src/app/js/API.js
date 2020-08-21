@@ -33,17 +33,18 @@ export class API {
 
     async getCurrencyValue(valueIn, valueOut) {
         try {
-            // const res = await fetch(`https://fcsapi.com/api-v2/forex/converter?pair1=${valueIn}&pair2=${valueOut}&amount=1&access_key=${this.API_KEY}`)
+            const res = await fetch(`https://fcsapi.com/api-v2/forex/converter?pair1=${valueIn}&pair2=${valueOut}&amount=1&access_key=${this.API_KEY}`)
 
-            // const rawData = await res.json()
-            // this.changeValue = rawData.response.total
-            // this.value1xIn = rawData.response[`price_1x_${valueIn}`]
-            // this.value1xOut = rawData.response[`price_1x_${valueOut}`]
+            const rawData = await res.json()
+            console.log(rawData);
+            this.changeValue = rawData.response.total
+            this.value1xIn = rawData.response[`price_1x_${valueIn}`]
+            this.value1xOut = rawData.response[`price_1x_${valueOut}`]
 
-            // console.log(this.changeValue, this.value1xIn, this.value1xOut);
+            console.log(this.changeValue, this.value1xIn, this.value1xOut);
         } catch (error) {
-            
+            console.log(error);
         }
     }
-    
+ 
 }

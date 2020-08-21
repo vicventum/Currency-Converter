@@ -40,7 +40,7 @@ async function fillList() {
     const currencyList = _API.currencyList
 
     _UI.fillList(currencyList)
-    _API.getCurrencyValue('USD', 'VEF')
+    // _API.getCurrencyValue('USD', 'VEF')
 }
 // -------------
 
@@ -57,8 +57,16 @@ function changeOption(e) {
 
 }
 // -------------
-function getData(e) {
+async function getData(e) {
     e.preventDefault()
 
-    // _API.getCurrencyValue()
+    const {inSelected, outSelected} = _UI.getCurrencySelected
+
+    await _API.getCurrencyValue(inSelected, outSelected)
+
+    const value = _UI.getValueToChange * _API.getChangeValue
+
+    _UI.render(value)
+
+
 }
