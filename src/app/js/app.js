@@ -83,6 +83,9 @@ async function getDataSuggestion(e) {
     e.preventDefault()
 
     const valueSuggestion = parseInt(e.target.textContent)
+    input.value = valueSuggestion
+
+    const {inSelected, outSelected} = _UI.getCurrencySelected
 
     await _API.getCurrencyValue(inSelected, outSelected)
 

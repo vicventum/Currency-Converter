@@ -9,8 +9,10 @@ export class UI {
     prevIn
     currencyOutSelected
     currencyInSelected
+    symbolOut
 
     get getCurrencySelected() {   
+        this.symbolOut = currencyOut.options[currencyOut.selectedIndex].dataset.symbol
         return {
             inSelected: currencyIn.options[currencyIn.selectedIndex].dataset.code,
             outSelected: currencyOut.options[currencyOut.selectedIndex].dataset.code
@@ -144,12 +146,14 @@ export class UI {
             const valueStringFormated = valueArray.join(' ')
             console.log(valueStringFormated);
     
-            if (valueString.length > 5) 
+            if (valueString.length > 6) 
                 this.screen.style.fontSize = '3rem'
             else 
-                this.rootStylesGet.getPropertyValue('--f-big')
+                this.screen.style.fontSize = this.rootStylesGet.getPropertyValue('--f-big')
 
-            this.screen.textContent = `${valueStringFormated}.${valueFloat}`
+            console.log(this.rootStylesGet.getPropertyValue('--f-big'));
+
+            this.screen.textContent = `${this.symbolOut} ${valueStringFormated}.${valueFloat}`
         }else {
             this.screen.style.fontSize = '3rem'
             this.screen.textContent = 'No Internet :('
