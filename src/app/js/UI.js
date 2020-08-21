@@ -3,8 +3,8 @@ export class UI {
     currencyOut = document.getElementById('currencyOut')
     input = document.getElementById('input')
     screen = document.getElementById('screen')
+    rootStylesGet = window.getComputedStyle(document.documentElement)
 
-    lastOption
     prevOut
     prevIn
     currencyOutSelected
@@ -119,32 +119,46 @@ export class UI {
     }
 
     render(value) {
-        const valueString = value.toString()
+        if (value) {
+            const valueString = value.toString()
+            
+    
+            // Split point
+            const valueInt = (valueString.split('.'))[0]
+            const valueFloat = (valueString.split('.'))[1]
+            console.log(valueInt);
+    
+            const cant = Math.ceil(valueInt.length / 3)
+            console.log('>>>' + cant);
+    
+            const valueArray = []
+    
+            let unit = -3
+            
+            for (let i = 1; i <= cant; i++) {
+                const slideValue = ((unit + 3) === 0) ? undefined : (unit + 3)
+                valueArray.unshift(valueInt.slice(unit, slideValue))
+                unit -= 3
+                console.log('> ' + unit);
+            }
+            const valueStringFormated = valueArray.join(' ')
+            console.log(valueStringFormated);
+    
+            if (valueString.length > 5) 
+                this.screen.style.fontSize = '3rem'
+            else 
+                this.rootStylesGet.getPropertyValue('--f-big')
 
-        // Split point
-        const valueInt = (valueString.split('.'))[0]
-        const valueFloat = (valueString.split('.'))[1]
-        console.log(valueInt);
-
-        const cant = Math.ceil(valueInt.length / 3)
-        console.log('>>>' + cant);
-
-        const valueArray = []
-
-        let unit = -3
-        
-        for (let i = 1; i <= cant; i++) {
-            const slideValue = ((unit + 3) === 0) ? undefined : (unit + 3)
-            valueArray.unshift(valueInt.slice(unit, slideValue))
-            unit -= 3
-            console.log('> ' + unit);
-        }
-        const valueStringFormated = valueArray.join(' ')
-        console.log(valueStringFormated);
-
-        if (valueString.length > 5) {
+            this.screen.textContent = `${valueStringFormated}.${valueFloat}`
+        }else {
             this.screen.style.fontSize = '3rem'
+            this.screen.textContent = 'No Internet :('
         }
-        this.screen.textContent = valueStringFormated
+    }
+
+
+    resetValues() {
+        this.screen.textContent = 0
+        this.input.value = ''
     }
 }

@@ -3,12 +3,11 @@ import { API } from "./API";
 import { UI } from "./UI";
 
 // Variables
-const screen = document.getElementById('screen'),
-    input = document.getElementById('input'),
-    currencyField = document.getElementById('currencyField'),
+const input = document.getElementById('input'),
     currencyIn = document.getElementById('currencyIn'),
     currencyOut = document.getElementById('currencyOut'),
     change = document.getElementById('change'),
+    btnsSuggestions = document.querySelectorAll('.btn--suggestion'),
     reset = document.getElementById('reset'),
     submit = document.getElementById('submit')
 
@@ -24,6 +23,8 @@ input.addEventListener('blur', cleanInput)
 currencyIn.addEventListener('change', changeOption)
 currencyOut.addEventListener('change', changeOption)
 change.addEventListener('click', changeCurrency)
+btnsSuggestions.forEach(btn => btn.addEventListener('click', getDataSuggestion))
+reset.addEventListener('click', resetValues)
 submit.addEventListener('click', getData)
 
 // Functions ===========================================
@@ -40,7 +41,8 @@ async function fillList() {
     const currencyList = _API.currencyList
 
     _UI.fillList(currencyList)
-    // _API.getCurrencyValue('USD', 'VEF')
+
+    getDataInitial()
 }
 // -------------
 
@@ -57,6 +59,13 @@ function changeOption(e) {
 
 }
 // -------------
+async function getDataInitial() {
+    const {inSelected, outSelected} = _UI.getCurrencySelected
+
+    await _API.getCurrencyValue(inSelected, outSelected)
+
+    _UI.render(_API.getChangeValue)
+}
 async function getData(e) {
     e.preventDefault()
 
@@ -69,4 +78,20 @@ async function getData(e) {
     _UI.render(value)
 
 
+}
+async function getDataSuggestion(e) {
+    e.preventDefault()
+
+    const valueSuggestion = parseInt(e.target.textContent)
+
+    await _API.getCurrencyValue(inSelected, outSelected)
+
+    const value = valueSuggestion * _API.getChangeValue
+
+    _UI.render(value)
+}
+function resetValues(e) {
+    e.preventDefault()
+
+    _UI.resetValues()
 }

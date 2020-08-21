@@ -1,6 +1,6 @@
 // CDF - EEK - ERN - LTL - LVL - TOP - ZWL
 // https://fcsapi.com/document/forex-api#forexsupportedcurrency
-import db from './db/db.json'  // FIXME:
+import db from './db/db.min.json'  // FIXME:
 export class API {
     DB_CURRENCY = 'https://gist.githubusercontent.com/vicventum/af3d829794d25d3f29741aaa21c0c147/raw/e436df97aa0990df7b50772780f5c12e36ac1654/Common-Currency.min.json'
     // URL_API = `https://fcsapi.com/api-v2/forex/converter?pair1=EUR&pair2=USD&amount=200&access_key=f901ivabhvt4pMh4W2wStKhVEGrkfOz2tR6E7wGHgalcU`
